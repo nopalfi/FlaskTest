@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<head>
+    <link rel="stylesheet" type="text/css" href="http://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" type="text/css" href="https://overpass-30e2.kxcdn.com/overpass.css">
+    <link rel="stylesheet" type="text/css" href="https://overpass-30e2.kxcdn.com/overpass-mono.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"> </script>
+    <script src="http://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+    <style>
+        body {
+            width: 80%;
+            margin:auto;
+        }
+        .header {
+            background-color: orange;
+            border-style: none;
+            margin-bottom: 10px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            text-align: center;
+            font-family: "Overpass";
+        }
+        .header img {
+            width: 80px;
+            height: 80px;
+            margin: 10px 80px;
+        }
+        .header p {
+            margin: 10px auto;
+            font-family: "overpass-mono";
+        }
+    </style>
+</head>
+<body>
+<div class="header">
+    <img src="http://fkip.ulm.ac.id/uploads/2021/03/fb443ff074fd390655e536ab32ec1bfd.png" alt="ulmlogo.png" />
+    <div class="title"><h2>Daftar Absensi <br>Universitas Lambung Mangkurat</h2></div>
+    <img src="http://fkip.ulm.ac.id/uploads/2021/03/fb443ff074fd390655e536ab32ec1bfd.png" alt="ulmlogo.png" />
+    <p>Jl. Brigjen Jalan Hasan Basri, Pangeran, Kec. Banjarmasin Utara, Kota Banjarmasin, Kalimantan Selatan 70123</p>
+</div>
+<div class="tabel_user">
+    <table id="myTable">
+    <thead>
+        <tr>
+            <th>User ID</th>
+            <th>Username</th>
+            <th>Nama</th>
+            <th>Jabatan</th>
+            <th>Tanggal Mendaftar</th>
+            
+        </tr>
+    </thead>
+    <tbody>
+        {% for row in rows %}
+        <tr>
+            <td>{{row[0]}}</td>
+            <td>{{row[1]}}</td>
+            <td>{{row[2]}}</td>
+            <td>{{row[3]}}</td>
+            <td>{{row[4]}}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+    </table>
+</div>
+<div class="tabel_absensi">
+    <table id="myTableAbsensi">
+        <thead>
+            <tr>
+                <th>Nama</th>
+                <th>Jabatan</th>
+                <th>Suhu</th>
+                <th>Tanggal Waktu Absensi</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for (rowA, rowU) in zip(absensi, users) %}
+        <tr>
+            <td>{{rowU[0]}}</td>
+            <td>{{rowU[1]}}</td>
+            <td>{{rowA[2]}}</td>
+            <td>{{rowA[3]}}</td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<div class="button-section">
+    <a type="button" href="/">Register</a>
+    <a type="button" href="/absensi">Absensi</a>
+</div>
+</body>
+<script>
+        
+        var pathname = $(location).attr('pathname')
+        if (pathname = '/') {
+            $(document).ready( function () {
+                $('#myTable').DataTable();
+                // $(".tabel_absensi").hide("fast")
+                // $(".tabel_user").show("fast")
+            } );
+            document.querySelector('.tabel_user').style.display = 'block';
+            document.querySelector('.tabel_absensi').style.display = 'none';
+        }
+        if(pathname = '/absensi') {
+            $(document).ready( function () {
+                $('#myTableAbsensi').DataTable();
+                // $(".tabel_user").hide("fast")
+                // $(".tabel_absensi").show("fast")
+            } );
+            document.querySelector('.tabel_user').style.display = 'none';
+            document.querySelector('.tabel_absensi').style.display = 'block';
+        }
+    
+</script>
+</html>
